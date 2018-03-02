@@ -13,53 +13,91 @@ app.post("/api/friends", function (req, res) {
 	var bestMatch = {
 		name: req.body.name,
 		photo: req.body.photo,
-		scores: []
+		scores: req.body["scores[]"]
 	};
-	var scoreArr = [];
-	for (var i = 0; i < req.body.scores.length; i++) {
-		scoreArr.push( parseInt(req.body.scores[i]));
-	}
-	bestMatch.scores = scoreArr;
+  var match = whichFriend(bestMatch)
+	friends.push(bestMatch);
+  res.send(match);
 
-	var compareScoreArr = [];
+  //do loop twice to compare two different values, from the new user and the friends that are in my database
 	for (var i = 0; i < friends.length; i++) {
+    console.log(friends[i].name);
+    totalDifference = 0;
 
-		var currentComparison = 0;
-      for(var j=0; j < bestMatch.scores.length; j++){
-        currentComparison += Math.abs( bestMatch.scores[j] - friends[i].scores[j] );
+      for (var j=0; j< friends[i].scores[j]; j++){
+
+        //
+        totalDifference = totalDifference + Math.abs(parseInt(friends[i].scores[j]) - parseInt(bestMatch.scores[j]));
+
+       
+        if (totalDifference <= bestMatch.friendDifference){
+
+        //trying to atribute the new value to friends
+          bestMatch.name = friends[i].name;
+          bestMatch.photo = friends[i].photo;
+          bestMatch.scores = totalDifference;
+        }
       }
-
-      // Push each comparison between friends to array
-      compareScoreArr.push(currentComparison);
     }
 
-    // Determine the best match using the postion of best match in the friendsData array
-    var bestMatchPosition = 0; // assume its the first person to start
-    for(var i=1; i < compareScoreArr.length; i++){
-      
-      // Lower number in comparison difference means better match
-      if(compareScoreArr[i] <= compareScoreArr[bestMatchPosition]){
-        bestMatchPosition = i;
-      }
-
-    }
-
-    // ***NOTE*** If the 2 friends have the same comparison, then the NEWEST entry in the friendsData array is chosen
-    var bestFriendMatch = friends[bestMatchPosition];
-
-
-
-    // Reply with a JSON object of the best match
-    res.json(bestFriendMatch);
-
-
-
-    // Push the new friend to the friends data array for storage
+    // save the user's data to the database
     friends.push(bestMatch);
+    res.json(bestMatch);
 
   });
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// 		scoreArr.push( parseInt(req.body.scores[i]));
+// 	}
+// 	bestMatch.scores = scoreArr;
+
+// 	var compareScoreArr = [];
+
+//   //do loop twice to compare two different values, from the new user and the friends that are in my database
+// 	for (var i = 0; i < friends.length; i++) {
+
+// 		var currentComparison = 0;
+//       for(var j=0; j < bestMatch.scores.length; j++){
+//         currentComparison += Math.abs( bestMatch.scores[j] - friends[i].scores[j] );
+//       }
+
+//       compareScoreArr.push(currentComparison);
+//     }
+
+
+//     var bestMatchPosition = 0; 
+//     for(var i=1; i < compareScoreArr.length; i++){
+      
+ 
+//       if(compareScoreArr[i] <= compareScoreArr[bestMatchPosition]){
+//         bestMatchPosition = i;
+//       }
+
+//     }
+//     var bestFriendMatch = friends[bestMatchPosition];
+
+
+
+//     res.json(bestFriendMatch);
+
+
+//     friends.push(bestMatch);
+
+//   });
+
+// }
 
 
 // Export for use in main server.js file

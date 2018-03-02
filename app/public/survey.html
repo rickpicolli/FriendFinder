@@ -7,11 +7,8 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<style>
-.jumbotron {
-	text-align: center;
-}
-</style>
+     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 </head>
 <body>
 	<div class="container">
@@ -26,7 +23,7 @@
         <a href="/home"><button type="button" class="btn btn-lg btn-success"><h4>Go back to home page</h4></button></a>  
     
       </div>
-  </div>
+  
 		<h2>Survey Questions</h2>
    		<hr>
 		<h3><strong>About You</strong></h3>
@@ -159,9 +156,9 @@
 
 <br><br>
       <!-- Quiz Submit Button -->
-    <div class="text-right">
-      <button style="width: 80%" id="submitButton" type="submit" class="btn btn-success btn-lg btn-block"><h4></span> Submit</h4></button> 
-  </div>
+   <!--  <div class="text-right"> -->
+      <button id="submitButton" type="submit" class="btn btn-success btn-lg btn-block"><h4></span> Submit</h4></button> 
+ <!--  </div> -->
 
 <div id="resultsModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -181,6 +178,7 @@
       </div>
     </div>
 
+
 <script type="text/javascript">
 	
 $(document).ready(function() {
@@ -189,7 +187,7 @@ $(document).ready(function() {
 $("#submitButton").on("click", function(event) {
 	event.preventDefault();
 
-	if( ($(".form-control").val().trim() !== "") && ($(".chosen-select").val().trim() !== "") ) {
+	if( ($("#name").val().trim() !== "") && ($("#photo").val().trim() !== "") ) {
 
 		var newUser = {
             name: $("#name").val().trim(),
@@ -226,13 +224,6 @@ $.post("/api/friends", newUser, function(data) {
 	return false;
 
 });
-
-//function to close the modal
-// $("#closeModal").click(function() {
-// 	$.get("/survey", function(req, res) {
-// 		location.replace(res);
-// 	});
-// });
 
 
 
