@@ -17,7 +17,7 @@ var friends = [ {
 }, {
 	"name" : "Marshall Eriksen",
 	"photo" : "https://home.sandiego.edu/~jgnibus/marshall.jpg",
-	"scores" : [5,5,5,5,3,2,3,5,3,1]
+	"scores" : [5,2,2,5,3,2,3,5,3,1]
 }, {
 	"name" : "Tracy McConnell (The Mother)",
 	"photo" : "https://shshkbb.files.wordpress.com/2014/04/how-i-met-your-mother-finale-08_612x380.jpg",
